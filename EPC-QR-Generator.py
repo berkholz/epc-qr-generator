@@ -32,9 +32,6 @@ class EPCgenerator(tkinter.Frame):
         self.name_var = tkinter.StringVar(value="")
         self.iban_var = tkinter.StringVar(value="")
         self.bic_var = tkinter.StringVar(value="")
-        self.verwendungszweck_var = tkinter.StringVar(value="")
-        self.betrag_var = tkinter.StringVar(value="0.00")
-
         self.text_var = tkinter.StringVar(value="")
         self.amount_var = tkinter.StringVar(value="0.00")
         self.createWidgets()
@@ -43,7 +40,9 @@ class EPCgenerator(tkinter.Frame):
         # define menu -> file
         self.menuFile = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuFile.add_command(label="Info", command=self.show_info)
-        self.menuFile.add_command(label="IBAN-Rechner", command=self.iban_calculator_dialog)
+        self.menuFile.add_command(
+            label="IBAN-Rechner",
+            command=self.iban_calculator_dialog)
         self.menuFile.add_separator()
         self.menuFile.add_command(label=" Beenden", command=self.quit)
         self.menuBar.add_cascade(label="Datei", menu=self.menuFile)
@@ -54,9 +53,16 @@ class EPCgenerator(tkinter.Frame):
 
         # define sub menu for templates -> entries
         self.menuTemplatesEntries = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuTemplatesEntries.add_command(label="Entry1", command=self.handler)
-        self.menuTemplatesEntries.add_command(label="Entry2", command=self.handler)
-        self.menuTemplates.add_cascade(label="Letzte Vorlagen...", menu=self.menuTemplatesEntries)
+        # TODO: Entries should be loaded via file
+        self.menuTemplatesEntries.add_command(
+            label="Entry1",
+            command=self.handler)
+        self.menuTemplatesEntries.add_command(
+            label="Entry2",
+            command=self.handler)
+        self.menuTemplates.add_cascade(
+            label="Letzte Vorlagen...",
+            menu=self.menuTemplatesEntries)
 
         # define menu -> settings
         self.menuSettings = tkinter.Menu(self.menuBar, tearoff=False)
@@ -64,9 +70,15 @@ class EPCgenerator(tkinter.Frame):
 
         # define sub menu for setting -> language
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuSettingsLanguage.add_command(label="Deutsch", command=self.handler)
-        self.menuSettingsLanguage.add_command(label="English", command=self.handler)
-        self.menuSettings.add_cascade(label="Language", menu=self.menuSettingsLanguage)
+        self.menuSettingsLanguage.add_command(
+            label="Deutsch",
+            command=self.handler)
+        self.menuSettingsLanguage.add_command(
+            label="English",
+            command=self.handler)
+        self.menuSettings.add_cascade(
+            label="Language",
+            menu=self.menuSettingsLanguage)
 
     def show_info(self):
         """Function for showing an info dialog."""
@@ -84,32 +96,56 @@ class EPCgenerator(tkinter.Frame):
         self.application_window = tkinter.Tk()
         self.application_window.title("IBAN-Rechner")
 
-        groupIBANcalculator = tkinter.LabelFrame(self.application_window, text="Kontodaten")
+        groupIBANcalculator = tkinter.LabelFrame(
+            self.application_window,
+            text="Kontodaten")
 
-        self.langLabel = tkinter.Label(groupIBANcalculator, text="Länderkennung:")
+        self.langLabel = tkinter.Label(
+            groupIBANcalculator,
+            text="Länderkennung:")
         self.langLabel.grid(row=0, column=0)
-        self.langEntry = tkinter.Entry(groupIBANcalculator, textvariable=self.lang)
+
+        self.langEntry = tkinter.Entry(
+            groupIBANcalculator,
+            textvariable=self.lang)
         self.langEntry.grid(row=0, column=1)
-        self.ktoLabel = tkinter.Label(groupIBANcalculator, text="KTO:")
-        self.ktoLabel.grid(row=1, column=0)
-        self.ktoEntry = tkinter.Entry(groupIBANcalculator, textvariable=self.kto_number)
-        self.ktoEntry.grid(row=1, column=1)
-        self.blzLabel = tkinter.Label(groupIBANcalculator, text="BLZ:")
-        self.blzLabel.grid(row=2, column=0)
-        self.blzEntry = tkinter.Entry(groupIBANcalculator, textvariable=self.blz)
-        self.blzEntry.grid(row=2, column=1)
-        self.calcButton = tkinter.Button(groupIBANcalculator, text="Calculate", command=self.calculate_iban)
-        self.calcButton.grid(row=3, column=1,sticky=tkinter.NW)
-        self.okButton = tkinter.Button(groupIBANcalculator, text="OK", command=self.calculate_iban_close)
-        self.okButton.grid(row=3, column=1,sticky=tkinter.SE)
-        groupIBANcalculator.pack(expand=True,fill="x")
+
         self.accountLabel = tkinter.Label(groupIBANcalculator, text="KTO:")
         self.accountLabel.grid(row=1, column=0)
 
-        groupCalcResult = tkinter.LabelFrame(self.application_window, text="IBAN")
+        self.accountEntry = tkinter.Entry(
+            groupIBANcalculator,
+            textvariable=self.kto_number)
+        self.accountEntry.grid(row=1, column=1)
+
+        self.bankcodeLabel = tkinter.Label(groupIBANcalculator, text="BLZ:")
+        self.bankcodeLabel.grid(row=2, column=0)
+
+        self.bankcodeEntry = tkinter.Entry(
+            groupIBANcalculator,
+            textvariable=self.blz)
+        self.bankcodeEntry.grid(row=2, column=1)
+
+        self.calcButton = tkinter.Button(
+            groupIBANcalculator,
+            text="Calculate",
+            command=self.calculate_iban)
+        self.calcButton.grid(row=3, column=1, sticky=tkinter.NW)
+
+        self.okButton = tkinter.Button(
+            groupIBANcalculator,
+            text="OK",
+            command=self.calculate_iban_close)
+        self.okButton.grid(row=3, column=1, sticky=tkinter.SE)
+
+        groupIBANcalculator.pack(expand=True, fill="x")
+
+        groupCalcResult = tkinter.LabelFrame(
+            self.application_window,
+            text="IBAN")
         self.resultText = tkinter.Text(master=groupCalcResult, height=10)
         self.resultText.grid(row=0, column=0)
-        groupCalcResult.pack(expand=True,fill="x")
+        groupCalcResult.pack(expand=True, fill="x")
 
     def _modulo97(self, number: object) -> int:
         """Function for calculating the modulo 97."""
@@ -178,7 +214,10 @@ class EPCgenerator(tkinter.Frame):
         self.versionCombobox.grid(row=0, column=1)
 
         # label for character set
-        self.charsetLabel = tkinter.Label(groupDefaultData, text="Character Set:").grid(row=1, column=0)
+        self.charsetLabel = tkinter.Label(
+            groupDefaultData,
+            text="Character Set:")
+        self.charsetLabel.grid(row=1, column=0)
 
         # combobox for character set
         self.charsetCombobox = ttk.Combobox(
@@ -190,7 +229,10 @@ class EPCgenerator(tkinter.Frame):
         self.charsetCombobox.grid(row=1, column=1)
 
         # label for identification
-        self.identLabel = tkinter.Label(groupDefaultData, text="Identification:").grid(row=2, column=0)
+        self.identLabel = tkinter.Label(
+            groupDefaultData,
+            text="Identification:")
+        self.identLabel.grid(row=2, column=0)
 
         # combobox for identification
         self.identCombobox = ttk.Combobox(
@@ -210,11 +252,21 @@ class EPCgenerator(tkinter.Frame):
         frameCustom = tkinter.Frame(self)
         groupCustomData = tkinter.LabelFrame(frameCustom, text="Custom")
         # name
-        self.nameLabel = tkinter.Label(groupCustomData, text="Name:").grid(row=0, column=0)
-        self.nameEntry = tkinter.Entry(groupCustomData, textvariable=self.name_var).grid(row=0, column=1)
+        self.nameLabel = tkinter.Label(groupCustomData, text="Name:")
+        self.nameLabel.grid(row=0, column=0)
 
-        self.ibanLabel = tkinter.Label(groupCustomData, text="IBAN:").grid(row=1, column=0)
-        self.ibanEntry = tkinter.Entry(groupCustomData, textvariable=self.iban_var).grid(row=1, column=1)
+        self.nameEntry = tkinter.Entry(
+            groupCustomData,
+            textvariable=self.name_var)
+        self.nameEntry.grid(row=0, column=1)
+
+        self.ibanLabel = tkinter.Label(groupCustomData, text="IBAN:")
+        self.ibanLabel.grid(row=1, column=0)
+
+        self.ibanEntry = tkinter.Entry(
+            groupCustomData,
+            textvariable=self.iban_var)
+        self.ibanEntry.grid(row=1, column=1)
 
         # BIC
         ttk.Label(groupCustomData, text="BIC:").grid(row=2, column=0)
@@ -244,9 +296,15 @@ class EPCgenerator(tkinter.Frame):
         # generate button
         frameButtons = tkinter.Frame(self)
         groupButtonFrame = tkinter.Frame(frameButtons)
-        self.generateButton = tkinter.Button(groupButtonFrame, text="Generate", command=self.refresh_output)
+        self.generateButton = tkinter.Button(
+            groupButtonFrame,
+            text="Generate",
+            command=self.refresh_output)
         self.generateButton.grid(row=0, column=0)
-        self.quitButton = tkinter.Button(groupButtonFrame, text="Quit", command=self.quit)
+        self.quitButton = tkinter.Button(
+            groupButtonFrame,
+            text="Quit",
+            command=self.quit)
         self.quitButton.grid(row=0, column=1)
         groupButtonFrame.pack(expand=True, fill="x", padx=5, pady=20)
         frameButtons.pack(fill="x", expand=True)
@@ -317,7 +375,7 @@ class EPCgenerator(tkinter.Frame):
 
             # refresh text field with qr code information
             self.outputText.delete(1.0, 'end')
-            self.outputText.insert('end',text2convert)
+            self.outputText.insert('end', text2convert)
 
             # generate and show qr code picture
             self._create_picture(text2convert)
