@@ -6,22 +6,28 @@ from PIL import Image, ImageTk
 
 class EPCgenerator(tkinter.Frame):
 
+    # constructor
     def __init__(self, parent=None):
         ttk.Frame.__init__(self, parent)
+        # create menu
         self.menuBar = tkinter.Menu(parent)
         parent.config(menu=self.menuBar)
         self.fillMenuBar()
         self.pack()
 
-        # Liste der Optionen
+        # options for basic epc settings
         self.ver_options = ["001", "002"]
         self.charset_options = ["1", "2", "3", "4", "5", "6", "7", "8"]
         self.ident_options = ["SCT", "INST"]
 
-        # Eingabefelder
+        # -- input variable for entry elements
+        # service tag has to be "BCD", other values are yet not allowed
         self.service_tag_var = tkinter.StringVar(value="BCD")
+        # define default value from ver_options
         self.version_var = tkinter.StringVar(value=self.ver_options[0])
+        # define default value from charset_options
         self.charset_var = tkinter.StringVar(value=self.charset_options[0])
+        # define default value from ident_options
         self.ident_var = tkinter.StringVar(value=self.ident_options[0])
         self.name_var = tkinter.StringVar(value="")
         self.iban_var = tkinter.StringVar(value="")
@@ -32,7 +38,7 @@ class EPCgenerator(tkinter.Frame):
         self.createWidgets()
 
     def fillMenuBar(self):
-        # definiere Datei Menü
+        # define menu -> file
         self.menuFile = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuFile.add_command(label="Info", command=self.show_info)
         self.menuFile.add_command(label="IBAN-Rechner", command=self.iban_calculator_dialog)
@@ -40,26 +46,28 @@ class EPCgenerator(tkinter.Frame):
         self.menuFile.add_command(label=" Beenden", command=self.quit)
         self.menuBar.add_cascade(label="Datei", menu=self.menuFile)
 
-        # definiere Vorlagen Menü
+        # define menu -> templates
         self.menuTemplates = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuBar.add_cascade(label="Vorlagen", menu=self.menuTemplates)
-        # definier submenü für vorlage -> einträge
+
+        # define sub menu for templates -> entries
         self.menuTemplatesEntries = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuTemplatesEntries.add_command(label="Entry1", command=self.handler)
         self.menuTemplatesEntries.add_command(label="Entry2", command=self.handler)
         self.menuTemplates.add_cascade(label="Letzte Vorlagen...", menu=self.menuTemplatesEntries)
 
-        # definiere Settings Menü
+        # define menu -> settings
         self.menuSettings = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuBar.add_cascade(label="Settings", menu=self.menuSettings)
 
-        # definier submenü für settings -> language
+        # define sub menu for setting -> language
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuSettingsLanguage.add_command(label="Deutsch", command=self.handler)
         self.menuSettingsLanguage.add_command(label="English", command=self.handler)
         self.menuSettings.add_cascade(label="Language", menu=self.menuSettingsLanguage)
 
     def show_info(self):
+        """Function for showing an info dialog."""
         message = (f"EPC-Generator 0.1\n"
                    f"Build on 2026-03-08 (Weltfrauentag!)\n"
                    f"Copyright © 2026 Marcel Berkholz"
@@ -67,6 +75,7 @@ class EPCgenerator(tkinter.Frame):
         infobox = tkinter.messagebox.showinfo("Info", message)
 
     def iban_calculator_dialog(self):
+        """Function for showing the IBAN-calulator dialog."""
         self.kto_number = tkinter.StringVar()
         self.blz = tkinter.StringVar()
         self.lang = tkinter.StringVar(value="DE")
@@ -99,24 +108,31 @@ class EPCgenerator(tkinter.Frame):
         groupCalcResult.pack(expand=True,fill="x")
 
     def _modulo97(self, number: object) -> int:
+        """Function for calculating the modulo 97."""
         return number % 97
 
     def calculate_iban_close(self):
-        if self.ktoEntry.get() != "" and self.blzEntry.get() != "":
+        """Wrapper function for calculating the IBAN and
+        closing the dialog (IBAN-calculator)."""
+        # only calculate if both (account number and bank code number) is given
+        if self.accountEntry.get() != "" and self.bankcodeEntry.get() != "":
             self.calculate_iban()
             self.application_window.destroy()
+        # otherwise close dialog
         else:
             self.application_window.destroy()
 
     def calculate_iban(self):
         kto_as_string = str(self.ktoEntry.get())
         blz_as_string = str(self.blzEntry.get())
+        """Function for calculating the IBAN."""
         langCode = str(self.langEntry.get())
 
         if kto_as_string != "" and blz_as_string != "":
             kto_blz_string = kto_as_string + blz_as_string
             modulo_result = self._modulo97(int(kto_blz_string))
             iban_tmp = f"{langCode}{modulo_result}{blz_as_string}{kto_as_string}"
+        # only calculate if both (account number and bank code number) is given
             self.iban_var.set(iban_tmp)
             self.resultText.delete(1.0, 'end')
             self.resultText.insert('end', iban_tmp)
@@ -125,8 +141,10 @@ class EPCgenerator(tkinter.Frame):
 
     def handler(self):
         print("handler called")
+        """Dummy function."""
 
     def createWidgets(self):
+        """Function for creating widgets."""
         # frame for default components
         frameDefault = tkinter.Frame(self)
 
@@ -191,10 +209,12 @@ class EPCgenerator(tkinter.Frame):
         # Verwendungszweck
         ttk.Label(groupCustomData, text="Verwendungszweck:").grid(row=3, column=0)
         ttk.Entry(groupCustomData, textvariable=self.verwendungszweck_var).grid(row=3, column=1)
+        # Text
 
         # Betrag
         ttk.Label(groupCustomData, text="Betrag (€):").grid(row=4, column=0)
         ttk.Entry(groupCustomData, textvariable=self.betrag_var).grid(row=4, column=1)
+        # amount
 
         groupCustomData.pack(expand=True, fill="x", side="left")
         frameCustom.pack(fill="x", expand=True)
@@ -210,18 +230,19 @@ class EPCgenerator(tkinter.Frame):
         frameButtons.pack(fill="x", expand=True)
 
         groupOutputText = tkinter.LabelFrame(self, text="Output-Text")
-        # Textfeld für Ausgabe
+        # text field for printing the text, which is used for qr code
         self.outputText = tkinter.Text(master=groupOutputText, height=10)
         self.outputText.grid(row=0, column=0)
         groupOutputText.pack(expand=True, fill="x")
 
         groupOutputPicture = tkinter.LabelFrame(self, text="Output-Picture")
-        # Bild-Label
-        self.bild_label = ttk.Label(groupOutputPicture)
-        self.bild_label.grid(row=0, column=1)
+        # label for the qr code
+        self.picture_label = ttk.Label(groupOutputPicture)
+        self.picture_label.grid(row=0, column=1)
         groupOutputPicture.pack(fill="x", expand=True)
 
     def print_vars(self):
+        """Print all variables for the barcode."""
         service_tag = self.service_tag_var.get()
         print(service_tag)
         version = self.versionCombobox.get()
@@ -243,10 +264,10 @@ class EPCgenerator(tkinter.Frame):
 
 
     def refresh_output(self):
+        """Refresh the output text and generate and show the qr code picture."""
         self.print_vars()
-        """Generiert ein Textfeld und ein Bild aus den Eingaben."""
         try:
-            # Werte holen
+            # get all values from input mask
             service_tag = self.service_tag_var.get()
             version = self.versionCombobox.get()
             charset = self.charsetCombobox.get()
@@ -274,26 +295,26 @@ class EPCgenerator(tkinter.Frame):
                             f"{information}\n"
             )
 
-            # Textfeld aktualisieren
+            # refresh text field with qr code information
             self.outputText.delete(1.0, 'end')
             self.outputText.insert('end',text2convert)
 
-            # Bild generieren
+            # generate and show qr code picture
             self._create_picture(text2convert)
         except Exception as e:
             messagebox.showerror("Fehler", str(e))
 
     def _create_picture(self, text):
-        """Erstellt ein Bild mit den Eingabewerten."""
+        """Generate and display the picture."""
 
-        # qr code genereieren
+        # generate the qr code
         qrcode = segno.make_qr(text, error='l')
         qrcode.save("qrcode.png", scale=5)
 
         # qrcode.png("QRCode.png", scale=8)
         img = Image.open('qrcode.png')
 
-        # Bild in Tkinter-Format konvertieren
+        # show qr code picture
         photo = ImageTk.PhotoImage(img)
         self.bild_label.config(image=photo)
         self.bild_label.image = photo  # Verweis halten, um GC zu verhindern
