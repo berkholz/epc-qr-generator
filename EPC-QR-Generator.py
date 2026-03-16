@@ -378,8 +378,6 @@ class EPCgenerator(tkinter.Frame):
         # generate the qr code
         qrcode = segno.make_qr(text, error='l')
         qrcode.save("qrcode.png", scale=5)
-
-        # qrcode.png("QRCode.png", scale=8)
         img = Image.open('qrcode.png')
 
         # show qr code picture
