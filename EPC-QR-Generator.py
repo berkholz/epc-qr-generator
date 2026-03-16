@@ -163,17 +163,11 @@ class EPCgenerator(tkinter.Frame):
             self.application_window.destroy()
 
     def calculate_iban(self):
-        kto_as_string = str(self.ktoEntry.get())
-        blz_as_string = str(self.blzEntry.get())
         """Function for calculating the IBAN."""
         account_number_as_string = str(self.accountEntry.get())
         bankcode_as_string = str(self.bankcodeEntry.get())
         langCode = str(self.langEntry.get())
 
-        if kto_as_string != "" and blz_as_string != "":
-            kto_blz_string = kto_as_string + blz_as_string
-            modulo_result = self._modulo97(int(kto_blz_string))
-            iban_tmp = f"{langCode}{modulo_result}{blz_as_string}{kto_as_string}"
         # only calculate if both (account number and bank code number) is given
         if account_number_as_string != "" and bankcode_as_string != "":
             account_bankcode_string = account_number_as_string + bankcode_as_string
