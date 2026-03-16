@@ -263,21 +263,17 @@ class EPCgenerator(tkinter.Frame):
         self.ibanEntry.grid(row=1, column=1)
 
         # BIC
-        ttk.Label(groupCustomData, text="BIC:").grid(row=2, column=0)
-        ttk.Entry(groupCustomData, textvariable=self.bic_var).grid(row=2, column=1)
+        bicLabel = ttk.Label(groupCustomData, text="BIC:")
+        bicLabel.grid(row=2, column=0)
+        bicEntry = ttk.Entry(groupCustomData, textvariable=self.bic_var)
+        bicEntry.grid(row=2, column=1)
 
-        # Verwendungszweck
-        ttk.Label(groupCustomData, text="Verwendungszweck:").grid(row=3, column=0)
-        ttk.Entry(groupCustomData, textvariable=self.verwendungszweck_var).grid(row=3, column=1)
         # Text
         textLabel = ttk.Label(groupCustomData, text="Verwendungszweck:")
         textLabel.grid(row=3, column=0)
         textEntry = ttk.Entry(groupCustomData, textvariable=self.text_var)
         textEntry.grid(row=3, column=1)
 
-        # Betrag
-        ttk.Label(groupCustomData, text="Betrag (€):").grid(row=4, column=0)
-        ttk.Entry(groupCustomData, textvariable=self.betrag_var).grid(row=4, column=1)
         # amount
         amountLabel = ttk.Label(groupCustomData, text="Betrag (€):")
         amountLabel.grid(row=4, column=0)
