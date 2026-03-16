@@ -183,8 +183,8 @@ class EPCgenerator(tkinter.Frame):
             tkinter.messagebox.showwarning("Warning", "KTO und BLZ fehlen!")
 
     def handler(self):
-        print("handler called")
         """Dummy function."""
+        print("Not implemented yet.")
 
     def createWidgets(self):
         """Function for creating widgets."""
