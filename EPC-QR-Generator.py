@@ -35,6 +35,8 @@ class EPCgenerator(tkinter.Frame):
         self.verwendungszweck_var = tkinter.StringVar(value="")
         self.betrag_var = tkinter.StringVar(value="0.00")
 
+        self.text_var = tkinter.StringVar(value="")
+        self.amount_var = tkinter.StringVar(value="0.00")
         self.createWidgets()
 
     def fillMenuBar(self):
@@ -101,6 +103,8 @@ class EPCgenerator(tkinter.Frame):
         self.okButton = tkinter.Button(groupIBANcalculator, text="OK", command=self.calculate_iban_close)
         self.okButton.grid(row=3, column=1,sticky=tkinter.SE)
         groupIBANcalculator.pack(expand=True,fill="x")
+        self.accountLabel = tkinter.Label(groupIBANcalculator, text="KTO:")
+        self.accountLabel.grid(row=1, column=0)
 
         groupCalcResult = tkinter.LabelFrame(self.application_window, text="IBAN")
         self.resultText = tkinter.Text(master=groupCalcResult, height=10)
@@ -126,6 +130,8 @@ class EPCgenerator(tkinter.Frame):
         kto_as_string = str(self.ktoEntry.get())
         blz_as_string = str(self.blzEntry.get())
         """Function for calculating the IBAN."""
+        account_number_as_string = str(self.accountEntry.get())
+        bankcode_as_string = str(self.bankcodeEntry.get())
         langCode = str(self.langEntry.get())
 
         if kto_as_string != "" and blz_as_string != "":
@@ -133,6 +139,13 @@ class EPCgenerator(tkinter.Frame):
             modulo_result = self._modulo97(int(kto_blz_string))
             iban_tmp = f"{langCode}{modulo_result}{blz_as_string}{kto_as_string}"
         # only calculate if both (account number and bank code number) is given
+        if account_number_as_string != "" and bankcode_as_string != "":
+            account_bankcode_string = account_number_as_string + bankcode_as_string
+            modulo_result = self._modulo97(int(account_bankcode_string))
+            iban_tmp = (f"{langCode}"
+                        f"{modulo_result}"
+                        f"{bankcode_as_string}"
+                        f"{account_number_as_string}")
             self.iban_var.set(iban_tmp)
             self.resultText.delete(1.0, 'end')
             self.resultText.insert('end', iban_tmp)
@@ -152,7 +165,8 @@ class EPCgenerator(tkinter.Frame):
         groupDefaultData = tkinter.LabelFrame(frameDefault, text="Defaults")
 
         # label for version
-        self.versionLabel = tkinter.Label(groupDefaultData, text="Version:").grid(row=0, column=0)
+        self.versionLabel = tkinter.Label(groupDefaultData, text="Version:")
+        self.versionLabel.grid(row=0, column=0)
 
         # combobox for version
         self.versionCombobox = ttk.Combobox(
@@ -210,11 +224,19 @@ class EPCgenerator(tkinter.Frame):
         ttk.Label(groupCustomData, text="Verwendungszweck:").grid(row=3, column=0)
         ttk.Entry(groupCustomData, textvariable=self.verwendungszweck_var).grid(row=3, column=1)
         # Text
+        textLabel = ttk.Label(groupCustomData, text="Verwendungszweck:")
+        textLabel.grid(row=3, column=0)
+        textEntry = ttk.Entry(groupCustomData, textvariable=self.text_var)
+        textEntry.grid(row=3, column=1)
 
         # Betrag
         ttk.Label(groupCustomData, text="Betrag (€):").grid(row=4, column=0)
         ttk.Entry(groupCustomData, textvariable=self.betrag_var).grid(row=4, column=1)
         # amount
+        amountLabel = ttk.Label(groupCustomData, text="Betrag (€):")
+        amountLabel.grid(row=4, column=0)
+        amountEntry = ttk.Entry(groupCustomData, textvariable=self.amount_var)
+        amountEntry.grid(row=4, column=1)
 
         groupCustomData.pack(expand=True, fill="x", side="left")
         frameCustom.pack(fill="x", expand=True)
@@ -257,11 +279,10 @@ class EPCgenerator(tkinter.Frame):
         print(name)
         iban = self.iban_var.get()
         print(iban)
-        betrag = self.betrag_var.get()
-        print(betrag)
-        verwendungszweck = self.verwendungszweck_var.get()
-        print(verwendungszweck)
-
+        amount = self.amount_var.get()
+        print(amount)
+        text = self.text_var.get()
+        print(text)
 
     def refresh_output(self):
         """Refresh the output text and generate and show the qr code picture."""
@@ -275,10 +296,10 @@ class EPCgenerator(tkinter.Frame):
             bic = self.bic_var.get()
             name = self.name_var.get()
             iban = self.iban_var.get()
-            betrag = self.betrag_var.get()
-            zweck = ""
-            referenz = ""
-            verwendungszweck = self.verwendungszweck_var.get()
+            amount = self.amount_var.get()
+            purpose = ""
+            reference = ""
+            text = self.text_var.get()
             information = ""
 
             text2convert = (f"{service_tag}\n"
@@ -288,12 +309,11 @@ class EPCgenerator(tkinter.Frame):
                             f"{bic}\n"
                             f"{name}\n"
                             f"{iban}\n"
-                            f"EUR{betrag}\n"
-                            f"{zweck}\n"
-                            f"{referenz}\n"
-                            f"{verwendungszweck}\n"
-                            f"{information}\n"
-            )
+                            f"EUR{amount}\n"
+                            f"{purpose}\n"
+                            f"{reference}\n"
+                            f"{text}\n"
+                            f"{information}\n")
 
             # refresh text field with qr code information
             self.outputText.delete(1.0, 'end')
@@ -316,8 +336,8 @@ class EPCgenerator(tkinter.Frame):
 
         # show qr code picture
         photo = ImageTk.PhotoImage(img)
-        self.bild_label.config(image=photo)
-        self.bild_label.image = photo  # Verweis halten, um GC zu verhindern
+        self.picture_label.config(image=photo)
+        self.picture_label.image = photo
 
 
 root = tkinter.Tk()
