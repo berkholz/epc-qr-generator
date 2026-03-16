@@ -66,7 +66,7 @@ class EPCgenerator(tkinter.Frame):
 
         # define menu -> settings
         self.menuSettings = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuBar.add_cascade(label="Settings", menu=self.menuSettings)
+        self.menuBar.add_cascade(label="Einstellungen", menu=self.menuSettings)
 
         # define sub menu for setting -> language
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
