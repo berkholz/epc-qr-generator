@@ -334,7 +334,6 @@ class EPCgenerator(tkinter.Frame):
 
     def refresh_output(self):
         """Refresh the output text and generate and show the qr code picture."""
-        self.print_vars()
         try:
             # get all values from input mask
             service_tag = self.service_tag_var.get()
