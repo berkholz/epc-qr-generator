@@ -40,17 +40,17 @@ class EPCgenerator(tkinter.Frame):
     def fillMenuBar(self):
         # define menu -> file
         self.menuFile = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuFile.add_command(label="Info", command=self.show_info)
+        self.menuFile.add_command(label="About", command=self.show_info)
         self.menuFile.add_command(
-            label="IBAN-Rechner",
+            label="IBAN calculator",
             command=self.iban_calculator_dialog)
         self.menuFile.add_separator()
-        self.menuFile.add_command(label=" Beenden", command=self.quit)
-        self.menuBar.add_cascade(label="Datei", menu=self.menuFile)
+        self.menuFile.add_command(label=" Quit", command=self.quit)
+        self.menuBar.add_cascade(label="File", menu=self.menuFile)
 
         # define menu -> templates
         self.menuTemplates = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuBar.add_cascade(label="Vorlagen", menu=self.menuTemplates)
+        self.menuBar.add_cascade(label="Templates", menu=self.menuTemplates)
 
         # define sub menu for templates -> entries
         self.menuTemplatesEntries = tkinter.Menu(self.menuBar, tearoff=False)
@@ -62,12 +62,12 @@ class EPCgenerator(tkinter.Frame):
             label="Entry2",
             command=self.handler)
         self.menuTemplates.add_cascade(
-            label="Letzte Vorlagen...",
+            label="Last used templates...",
             menu=self.menuTemplatesEntries)
 
         # define menu -> settings
         self.menuSettings = tkinter.Menu(self.menuBar, tearoff=False)
-        self.menuBar.add_cascade(label="Einstellungen", menu=self.menuSettings)
+        self.menuBar.add_cascade(label="Settings", menu=self.menuSettings)
 
         # define sub menu for setting -> language
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
