@@ -31,7 +31,7 @@ To build it with pyinstaller for generating binaries for executing without pytho
 cd /path/to/gitrepository/epc-qr-generator/
 
 # create binaries with pyinstaller
-pyinstaller EPC-QR-Generator.py
+pyinstaller --onefile EPC-QR-Generator.py
 ```
 
 If you have setup a virtual environment, you can:
@@ -49,7 +49,7 @@ source /path/to/gitrepository/epc-qr-generator/.venv/bin/activate
 pip3 install pillow tk segno pyinstaller pycodestyle
 
 # create binaries with pyinstaller
-pyinstaller EPC-QR-Generator.py
+pyinstaller --onefile EPC-QR-Generator.py
 ```
 ## More Information about EPC
 * https://de.wikipedia.org/wiki/EPC-QR-Code
