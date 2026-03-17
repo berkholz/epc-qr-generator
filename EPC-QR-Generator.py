@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox, simpledialog
 import segno  # qr code generation
 import tk
 from PIL import Image, ImageTk
+import os # import for getting path
 
 class EPCgenerator(tkinter.Frame):
 
@@ -309,6 +310,8 @@ class EPCgenerator(tkinter.Frame):
         # label for the qr code
         self.picture_label = ttk.Label(groupOutputPicture)
         self.picture_label.grid(row=0, column=1)
+        self.picture_path = tkinter.Text(groupOutputPicture, height=1)
+        self.picture_path.grid(row=1, column=1)
         groupOutputPicture.pack(fill="x", expand=True)
 
     def print_vars(self):
@@ -374,15 +377,21 @@ class EPCgenerator(tkinter.Frame):
     def _create_picture(self, text):
         """Generate and display the picture."""
 
+        current_directory = os.getcwd()
         # generate the qr code
         qrcode = segno.make_qr(text, error='l')
-        qrcode.save("qrcode.png", scale=5)
-        img = Image.open('qrcode.png')
+        qrcode_file_path = f"{current_directory}/qrcode.png"
+        qrcode.save(qrcode_file_path, scale=5)
+        img = Image.open(qrcode_file_path)
 
         # show qr code picture
         photo = ImageTk.PhotoImage(img)
         self.picture_label.config(image=photo)
         self.picture_label.image = photo
+
+        # show path of qr code file
+        self.picture_path.delete(1.0, 'end')
+        self.picture_path.insert('end', qrcode_file_path)
 
 
 root = tkinter.Tk()
