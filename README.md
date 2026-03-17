@@ -51,6 +51,19 @@ pip3 install pillow tk segno pyinstaller pycodestyle
 # create binaries with pyinstaller
 pyinstaller --onefile EPC-QR-Generator.py
 ```
+## Running EPC-QR-Generator
+To run with python:
+´´´´
+python3 EPC-QR-Generator.py
+´´´
+
+To run the binary, just double click the application.
+
+> [!NOTE]
+> If you execute the macOSx binary the start of the application could be delayed for 5 seconds. Please wait 5 seconds to let the application window appear.
+
+
+
 ## More Information about EPC
 * https://de.wikipedia.org/wiki/EPC-QR-Code
 * https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2022-06/EPC121-16%20SCT%20Inst%20C2PSP%20IG%202023%20V1.0.pdf
