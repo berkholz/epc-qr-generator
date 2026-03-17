@@ -181,7 +181,7 @@ class EPCgenerator(tkinter.Frame):
             self.resultText.delete(1.0, 'end')
             self.resultText.insert('end', iban_tmp)
         else:
-            tkinter.messagebox.showwarning("Warning", "KTO und BLZ fehlen!")
+            tkinter.messagebox.showwarning("Warning", "Account number and/or bankcode are required!")
 
     def handler(self):
         """Dummy function."""
@@ -270,13 +270,13 @@ class EPCgenerator(tkinter.Frame):
         bicEntry.grid(row=2, column=1)
 
         # Text
-        textLabel = ttk.Label(groupCustomData, text="Verwendungszweck:")
+        textLabel = ttk.Label(groupCustomData, text="Text:")
         textLabel.grid(row=3, column=0)
         textEntry = ttk.Entry(groupCustomData, textvariable=self.text_var)
         textEntry.grid(row=3, column=1)
 
         # amount
-        amountLabel = ttk.Label(groupCustomData, text="Betrag (€):")
+        amountLabel = ttk.Label(groupCustomData, text="Amount (€):")
         amountLabel.grid(row=4, column=0)
         amountEntry = ttk.Entry(groupCustomData, textvariable=self.amount_var)
         amountEntry.grid(row=4, column=1)
