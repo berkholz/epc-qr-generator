@@ -397,5 +397,5 @@ class EPCgenerator(tkinter.Frame):
 root = tkinter.Tk()
 app = EPCgenerator(parent=root)
 root.title("EPC-Generator")
-root.geometry("600x720")
+root.geometry("600x750")
 root.mainloop()
