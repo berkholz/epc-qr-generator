@@ -154,7 +154,7 @@ class EPCgenerator(tkinter.Frame):
         self.resultText.grid(row=0, column=0)
         groupCalcResult.pack(expand=True, fill="x")
 
-    def _modulo97(self, number: object) -> int:
+    def _modulo97(self, number: int) -> int:
         """Function for calculating the modulo 97."""
         return number % 97
 
