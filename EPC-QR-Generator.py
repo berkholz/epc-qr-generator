@@ -35,6 +35,12 @@ class EPCgenerator(tkinter.Frame):
         self.bic_var = tkinter.StringVar(value="")
         self.text_var = tkinter.StringVar(value="")
         self.amount_var = tkinter.StringVar(value="0.00")
+
+        # create menu
+        self.menuBar = tkinter.Menu(parent)
+        parent.config(menu=self.menuBar)
+        self.fillMenuBar()
+        self.pack()
         self.createWidgets()
 
     def fillMenuBar(self):
