@@ -62,7 +62,24 @@ To run the binary, just double click the application.
 > [!NOTE]
 > If you execute the macOSx binary the start of the application could be delayed for 5 seconds. Please wait 5 seconds to let the application window appear.
 
+## Generating new languages
+For generating a new language file for tranlation, you have to execute the following commands, e.g. for englisch: 
+```
+mkdir locale
+# extracting POT files with xgettext 
+xgettext epc-qr-generator.py -d messages -p locale
+mv locale/messages.po locale/messages.pot
+mkdir -p locale/en/LC_MESSAGES/
+msginit -i locale/messages.pot --locale=en_EN -o locale/en/LC_MESSAGES/messages.po
+msgfmt locale/en/LC_MESSAGES/messages.po -o locale/en/LC_MESSAGES/messages.mo
+```
 
+### Updating languages
+```
+msgmerge locale/en/LC_MESSAGES/messages.po locale/messages.pot -o locale/en/LC_MESSAGES/messages.po
+msgmerge locale/de/LC_MESSAGES/messages.po locale/messages.pot -o locale/de/LC_MESSAGES/messages.po
+
+```
 
 ## More Information about EPC
 * https://de.wikipedia.org/wiki/EPC-QR-Code
