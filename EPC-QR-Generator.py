@@ -4,17 +4,21 @@ import segno  # qr code generation
 import tk
 from PIL import Image, ImageTk
 import os # import for getting path
+import gettext # import for internationalization i18
+import configparser # configuration file loading
+#from pathlib import Path # import for file checking of config file
+
+qrcode_file_name = f"qrcode.png"
+qrcode_file_path = os.getcwd()
+config_file_name = f"epc-qr-generator.ini"
 
 class EPCgenerator(tkinter.Frame):
 
     # constructor
     def __init__(self, parent=None):
+        self.initialize_config_file()
+
         ttk.Frame.__init__(self, parent)
-        # create menu
-        self.menuBar = tkinter.Menu(parent)
-        parent.config(menu=self.menuBar)
-        self.fillMenuBar()
-        self.pack()
 
         # options for basic epc settings
         self.ver_options = ["001", "002"]
@@ -79,13 +83,71 @@ class EPCgenerator(tkinter.Frame):
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuSettingsLanguage.add_command(
             label="Deutsch",
-            command=self.handler)
+            command=self.set_language_de)
         self.menuSettingsLanguage.add_command(
             label="English",
-            command=self.handler)
+            command=self.set_language_en)
         self.menuSettings.add_cascade(
             label=_("Language"),
             menu=self.menuSettingsLanguage)
+
+    def _check_config_file(self) -> bool:
+        """
+        check config file if it exists and if it has a default section
+        :return: True if config file exists and if it has a default section, else False
+        """
+        # check if file exists and readable
+        if os.path.isfile(config_file_name) & os.path.exists(config_file_name):
+            cp = configparser.ConfigParser()
+            cp.read(config_file_name)
+            # check if config file has DEFAULT section
+            if cp.has_section('EPC_CONFIG'):
+                return True
+        return False
+
+    def _create_default_config_file(self):
+        config_parser = configparser.ConfigParser()
+        config_parser['EPC_CONFIG'] = {
+            'language': 'de',
+            'qr_code_file': f"{qrcode_file_path}/{qrcode_file_name}"}
+        with open(config_file_name, 'w') as config:
+            config_parser.write(config)
+
+    def initialize_config_file(self):
+        # check config file if it exists and if it has a default section
+        if self._check_config_file():
+            cp = configparser.ConfigParser()
+            cp.read(config_file_name)
+            try:
+                self.language = cp.get("EPC_CONFIG", "language")
+            except:
+                print("Error reading language config file")
+            match self.language:
+                case "de":
+                    self.set_language_de()
+                case "en":
+                    self.set_language_en()
+                case _:
+                    print("Language " + self.language + " is not supported. Setting to default: english.")
+                    self.set_language_en()
+        else:
+            print("No EPC_CONFIG defined.")
+            self._create_default_config_file()
+
+    def set_language_de(self):
+        """
+        More information about mulitlingual support:
+         https://phrase.com/blog/posts/learn-gettext-tools-internationalization/
+        :return:
+        """
+        de = gettext.translation('messages', localedir='locale', languages=['de:en'])
+        de.install()
+        _ = de.gettext
+
+    def set_language_en(self):
+        en = gettext.translation('messages', localedir='locale', languages=['en:en'])
+        en.install()
+        _ = en.gettext
 
     def show_info(self):
         """Function for showing an info dialog."""
@@ -383,12 +445,11 @@ class EPCgenerator(tkinter.Frame):
     def _create_picture(self, text):
         """Generate and display the picture."""
 
-        current_directory = os.getcwd()
+        qrcode_file = f"{qrcode_file_path}/{qrcode_file_name}"
         # generate the qr code
         qrcode = segno.make_qr(text, error='l')
-        qrcode_file_path = f"{current_directory}/qrcode.png"
-        qrcode.save(qrcode_file_path, scale=5)
-        img = Image.open(qrcode_file_path)
+        qrcode.save(qrcode_file, scale=5)
+        img = Image.open(qrcode_file)
 
         # show qr code picture
         photo = ImageTk.PhotoImage(img)
@@ -397,7 +458,7 @@ class EPCgenerator(tkinter.Frame):
 
         # show path of qr code file
         self.picture_path.delete(1.0, 'end')
-        self.picture_path.insert('end', qrcode_file_path)
+        self.picture_path.insert('end', qrcode_file)
 
 if __name__ == '__main__':
     root = tkinter.Tk()
