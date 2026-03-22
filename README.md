@@ -74,7 +74,7 @@ msginit -i locale/messages.pot --locale=en_EN -o locale/en/LC_MESSAGES/messages.
 msgfmt locale/en/LC_MESSAGES/messages.po -o locale/en/LC_MESSAGES/messages.mo
 ```
 
-### Updating languages
+### Updating language files
 ```
 msgmerge locale/en/LC_MESSAGES/messages.po locale/messages.pot -o locale/en/LC_MESSAGES/messages.po
 msgmerge locale/de/LC_MESSAGES/messages.po locale/messages.pot -o locale/de/LC_MESSAGES/messages.po
