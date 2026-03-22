@@ -49,7 +49,7 @@ source /path/to/gitrepository/epc-qr-generator/.venv/bin/activate
 pip3 install pillow tk segno pyinstaller pycodestyle
 
 # create binaries with pyinstaller
-pyinstaller --onefile EPC-QR-Generator.py
+pyinstaller --noconsole --add-data locale/de/LC_MESSAGES/:locale/de/LC_MESSAGES --add-data locale/en/LC_MESSAGES/:locale/en/LC_MESSAGES" --add-data locale/*.pot:locale/" EPC-QR-Generator.py
 ```
 ## Running EPC-QR-Generator
 To run with python:
