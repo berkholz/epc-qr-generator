@@ -131,7 +131,7 @@ class EPCgenerator(tkinter.Frame):
                     print("Language " + self.language + " is not supported. Setting to default: english.")
                     self.set_language_en()
         else:
-            print("No EPC_CONFIG defined.")
+            print("No EPC_CONFIG defined. Creating default config file with german language support...")
             self._create_default_config_file()
 
     def set_language_de(self):
