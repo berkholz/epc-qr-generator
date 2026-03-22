@@ -1,3 +1,4 @@
+import sys
 import tkinter
 from tkinter import ttk, messagebox, simpledialog
 import segno  # qr code generation
@@ -7,6 +8,7 @@ import os # import for getting path
 import gettext # import for internationalization i18
 import configparser # configuration file loading
 #from pathlib import Path # import for file checking of config file
+from os import path
 
 qrcode_file_name = f"qrcode.png"
 qrcode_file_path = os.getcwd()
@@ -140,12 +142,18 @@ class EPCgenerator(tkinter.Frame):
          https://phrase.com/blog/posts/learn-gettext-tools-internationalization/
         :return:
         """
-        de = gettext.translation('messages', localedir='locale', languages=['de:en'])
+        bundle_dir = getattr(sys, '_MEIPASS', path.abspath(
+        path.dirname(__file__)))  # get the bundle dir if bundled or simply the __file__ dir if not bundled
+        locales_dir = path.abspath(path.join(bundle_dir, 'locale'))
+        de = gettext.translation('messages', localedir=locales_dir, languages=['de:en'])
         de.install()
         _ = de.gettext
 
     def set_language_en(self):
-        en = gettext.translation('messages', localedir='locale', languages=['en:en'])
+        bundle_dir = getattr(sys, '_MEIPASS', path.abspath(
+        path.dirname(__file__)))  # get the bundle dir if bundled or simply the __file__ dir if not bundled
+        locales_dir = path.abspath(path.join(bundle_dir, 'locale'))
+        en = gettext.translation('messages', localedir=locales_dir, languages=['en:de'])
         en.install()
         _ = en.gettext
 
