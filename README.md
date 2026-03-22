@@ -34,7 +34,7 @@ cd /path/to/gitrepository/epc-qr-generator/
 pyinstaller --onefile EPC-QR-Generator.py
 ```
 
-If you have setup a virtual environment, you can:
+If you have set up a virtual environment, you can:
 ```
 # change to the git repository
 cd /path/to/gitrepository/epc-qr-generator/
@@ -60,10 +60,10 @@ python3 EPC-QR-Generator.py
 To run the binary, just double click the application.
 
 > [!NOTE]
-> If you execute the macOSx binary the start of the application could be delayed for 5 seconds. Please wait 5 seconds to let the application window appear.
+> If you execute the macOSX binary the start of the application could be delayed for 5 seconds. Please wait 5 seconds to let the application window appear.
 
 ## Generating new languages
-For generating a new language file for tranlation, you have to execute the following commands, e.g. for englisch: 
+For generating a new language file for translation, you have to execute the following commands, e.g. for english: 
 ```
 mkdir locale
 # extracting POT files with xgettext 
