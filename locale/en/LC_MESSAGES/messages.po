@@ -1,0 +1,142 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Marcel Berkholz, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 23:47+0100\n"
+"PO-Revision-Date: 2026-03-18 23:29+0100\n"
+"Last-Translator: Marcel Berkholz <epc-qr-generator@example.com>\n"
+"Language-Team: English\n"
+"Language: en_EN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: EPC-QR-Generator.py:46
+msgid "About"
+msgstr "About"
+
+#: EPC-QR-Generator.py:48 EPC-QR-Generator.py:101
+msgid "IBAN calculator"
+msgstr "IBAN calculator"
+
+#: EPC-QR-Generator.py:51 EPC-QR-Generator.py:300
+msgid "Quit"
+msgstr "Quit"
+
+#: EPC-QR-Generator.py:52
+msgid "File"
+msgstr "File"
+
+#: EPC-QR-Generator.py:56
+msgid "Templates"
+msgstr "Templates"
+
+#: EPC-QR-Generator.py:68
+msgid "Last used templates..."
+msgstr "Last used templates..."
+
+#: EPC-QR-Generator.py:73
+msgid "Settings"
+msgstr "Settings"
+
+#: EPC-QR-Generator.py:84
+msgid "Language"
+msgstr "Language"
+
+#: EPC-QR-Generator.py:105
+msgid "Account data"
+msgstr "Account data"
+
+#: EPC-QR-Generator.py:109
+msgid "country code:"
+msgstr "country code:"
+
+#: EPC-QR-Generator.py:135
+msgid "Calculate"
+msgstr "Calculate"
+
+#: EPC-QR-Generator.py:141
+msgid "OK"
+msgstr "OK"
+
+#: EPC-QR-Generator.py:149
+msgid "IBAN"
+msgstr "IBAN"
+
+#: EPC-QR-Generator.py:187
+msgid "Warning"
+msgstr "Warning"
+
+#: EPC-QR-Generator.py:187
+msgid "Account number and/or bankcode are required!"
+msgstr "Account number and/or bankcode are required!"
+
+#: EPC-QR-Generator.py:191
+msgid "Not implemented yet."
+msgstr "Not implemented yet."
+
+#: EPC-QR-Generator.py:199
+msgid "Defaults"
+msgstr "Defaults"
+
+#: EPC-QR-Generator.py:202
+msgid "Version:"
+msgstr "Version:"
+
+#: EPC-QR-Generator.py:217
+msgid "Character Set:"
+msgstr "Character Set:"
+
+#: EPC-QR-Generator.py:232
+msgid "Identification:"
+msgstr "Identification:"
+
+#: EPC-QR-Generator.py:251
+msgid "Custom"
+msgstr "Custom"
+
+#: EPC-QR-Generator.py:253
+msgid "Name:"
+msgstr "Name:"
+
+#: EPC-QR-Generator.py:261
+msgid "IBAN:"
+msgstr "IBAN:"
+
+#: EPC-QR-Generator.py:270
+msgid "BIC:"
+msgstr "BIC:"
+
+#: EPC-QR-Generator.py:276
+msgid "Text:"
+msgstr "Text:"
+
+#: EPC-QR-Generator.py:282
+msgid "Amount (€):"
+msgstr "Amount (€):"
+
+#: EPC-QR-Generator.py:295
+msgid "Generate"
+msgstr "Generate"
+
+#: EPC-QR-Generator.py:306
+msgid "Output-Text"
+msgstr "Output-Text"
+
+#: EPC-QR-Generator.py:312
+msgid "Output-Picture"
+msgstr "Output-Picture"
+
+#: EPC-QR-Generator.py:378
+msgid "Fehler"
+msgstr "Fehler"
+
+#: EPC-QR-Generator.py:402
+msgid "EPC-Generator"
+msgstr "EPC-Generator"
