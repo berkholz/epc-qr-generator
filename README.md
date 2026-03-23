@@ -51,6 +51,31 @@ pip3 install pillow tk segno pyinstaller pycodestyle
 # create binaries with pyinstaller
 pyinstaller --noconsole --add-data locale/de/LC_MESSAGES/:locale/de/LC_MESSAGES --add-data locale/en/LC_MESSAGES/:locale/en/LC_MESSAGES" --add-data locale/*.pot:locale/" EPC-QR-Generator.py
 ```
+
+## Create DMG image file for distributing the macOSX app
+First of all, you have to install create-dmg:
+```
+brew install create-dmg
+```
+Now, you can create the dmg image file:
+```
+# create directory for .app folder and move app folder to it
+mkdir -p dist/dmg/
+mv dist/main.app dist/dmg/EPC-QR-Generator.app
+
+# create dmg image with app
+create-dmg \
+  --volname "EPC-QR-Generator" \
+  --volicon "epc-qr-generator.logo.ico" \
+  --window-pos 200 120 \
+  --window-size 600 300 \
+  --icon-size 100 \
+  --icon "EPC-QR-Generator.app" 175 120 \
+  --hide-extension "EPC-QR-Generator.app" \
+  --app-drop-link 425 120 \
+  "dist/EPC-QR-Generator.dmg" \
+  "dist/dmg/"
+```
 ## Running EPC-QR-Generator
 To run with python:
 ´´´´
