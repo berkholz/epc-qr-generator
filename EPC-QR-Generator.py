@@ -10,9 +10,11 @@ import configparser # configuration file loading
 #from pathlib import Path # import for file checking of config file
 from os import path
 
+base_path = os.path.expanduser("~")
 qrcode_file_name = f"qrcode.png"
-qrcode_file_path = os.getcwd()
 config_file_name = f"epc-qr-generator.ini"
+qrcode_file = os.path.join(base_path, qrcode_file_name)
+config_file = os.path.join(base_path, config_file_name)
 
 class EPCgenerator(tkinter.Frame):
 
@@ -99,9 +101,9 @@ class EPCgenerator(tkinter.Frame):
         :return: True if config file exists and if it has a default section, else False
         """
         # check if file exists and readable
-        if os.path.isfile(config_file_name) & os.path.exists(config_file_name):
+        if os.path.isfile(config_file) & os.path.exists(config_file):
             cp = configparser.ConfigParser()
-            cp.read(config_file_name)
+            cp.read(config_file)
             # check if config file has DEFAULT section
             if cp.has_section('EPC_CONFIG'):
                 return True
@@ -111,15 +113,15 @@ class EPCgenerator(tkinter.Frame):
         config_parser = configparser.ConfigParser()
         config_parser['EPC_CONFIG'] = {
             'language': 'de',
-            'qr_code_file': f"{qrcode_file_path}/{qrcode_file_name}"}
-        with open(config_file_name, 'w') as config:
+            'qr_code_file': f"{qrcode_file}"}
+        with open(config_file, 'w') as config:
             config_parser.write(config)
 
     def initialize_config_file(self):
         # check config file if it exists and if it has a default section
         if self._check_config_file():
             cp = configparser.ConfigParser()
-            cp.read(config_file_name)
+            cp.read(config_file)
             try:
                 self.language = cp.get("EPC_CONFIG", "language")
             except:
