@@ -61,7 +61,7 @@ Now, you can create the dmg image file:
 ```
 # create directory for .app folder and move app folder to it
 mkdir -p dist/dmg/
-mv dist/main.app dist/dmg/EPC-QR-Generator.app
+mv dist/EPC-QR-Generator dist/dmg/
 
 # create dmg image with app
 create-dmg \
