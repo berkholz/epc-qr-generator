@@ -5,9 +5,13 @@ Python program for generating EPC QR codes. With this program you can generate Q
 3.14
 
 ## Packages to install for building
+### PIP packages
 * tk
 * pillow
 * segno
+
+### APT packages 
+* python3.10-venv (Ubuntu for venv)
 
 When using a virtual environment:
 ```
@@ -15,10 +19,10 @@ When using a virtual environment:
 cd /path/to/gitrepository/epc-qr-generator/
 
 # create the virtual environment
-python3 -m venv ./
+python3 -m venv ${PWD}/venv
 
 # load the virtual environment
-source /path/to/gitrepository/epc-qr-generator/.venv/bin/activate
+source ${PWD}/venv/bin/activate
 
 # install python modules
 pip3 install pillow tk segno
