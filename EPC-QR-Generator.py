@@ -87,10 +87,11 @@ class EPCgenerator(tkinter.Frame):
         self.menuSettingsLanguage = tkinter.Menu(self.menuBar, tearoff=False)
         self.menuSettingsLanguage.add_command(
             label="Deutsch",
-            command=self.set_language_de)
+            command=lambda:[self.change_config("EPC_CONFIG", "language", "de" ), self.handler_restart_application()]
+        )
         self.menuSettingsLanguage.add_command(
             label="English",
-            command=self.set_language_en)
+            command=lambda:[self.change_config("EPC_CONFIG", "language", "en" ),self.handler_restart_application()])
         self.menuSettings.add_cascade(
             label=_("Language"),
             menu=self.menuSettingsLanguage)
@@ -117,6 +118,20 @@ class EPCgenerator(tkinter.Frame):
         with open(config_file, 'w') as config:
             config_parser.write(config)
 
+    def change_config(self, section, option, value):
+        # check config file if it exists and if it has a default section
+        if self._check_config_file():
+            cp = configparser.ConfigParser()
+            cp.read(config_file)
+            try:
+                cp[section][option] = value
+                with open(config_file, 'w') as config:
+                    cp.write(config)
+            except:
+                print("Error writing option ({0}) to config file.".format(option))
+        else:
+            raise Exception ("Error while reading config file.")
+
     def initialize_config_file(self):
         # check config file if it exists and if it has a default section
         if self._check_config_file():
@@ -124,6 +139,7 @@ class EPCgenerator(tkinter.Frame):
             cp.read(config_file)
             try:
                 self.language = cp.get("EPC_CONFIG", "language")
+                self.qr_code_file = cp.get("EPC_CONFIG", "qr_code_file")
             except:
                 print("Error reading language config file")
             match self.language:
@@ -266,6 +282,11 @@ class EPCgenerator(tkinter.Frame):
     def handler(self):
         """Dummy function."""
         print(_("Not implemented yet."))
+
+    def handler_restart_application(self):
+        """Dummy function."""
+        message = _("Please restart the application to take new config settings effect.")
+        infobox = tkinter.messagebox.showinfo("Info", message)
 
     def createWidgets(self):
         """Function for creating widgets."""
