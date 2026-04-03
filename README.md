@@ -26,8 +26,13 @@ If you want to create binary files for distribution purposes, you can have a loo
 * [Linux](doc/BUILD.linux.md)
 * [macOS](doc/BUILD.macOSX.md)
 
-# Create new languages
+# Language support
+## Create new languages
 If you want to create a new language for the UI, please see [doc/CREATE_LANG](doc/CREATE_LANG.md).
+
+## Update translations 
+If you have added new text that is relevant for multilanguage support, you have to update the template and po and mo files of all languages. To see how, take a look at [doc/UPDATE_LANG](doc/UPDATE_LANG.md).
+
 
 # More Information about EPC 
 * https://de.wikipedia.org/wiki/EPC-QR-Code
