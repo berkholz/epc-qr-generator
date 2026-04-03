@@ -39,7 +39,7 @@ python3 -m venv ${PWD}/.venv
 source ${PWD}/.venv/bin/activate
 ```
 
-# Install python package in your venv
+# Install python packages in your venv
 And then installing the python packages:
 ```
 # install python modules
