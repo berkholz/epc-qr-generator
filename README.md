@@ -1,115 +1,41 @@
-# epc-qr-generator
-Python program for generating EPC QR codes. With this program you can generate QR codes to transfer money via your banking app.
+EPC-QR-Generator is a Python program for generating EPC QR codes. With this QR codes you can easily transfer money via your banking app.
 
-## Python version to run with
-3.14
+# Running the application
+## Prequisite
+EPC_QR-Generator is made with Python 3.14.
 
-## Packages to install for building
-### PIP packages
+To run with Python you need the following packages:
 * tk
-* pillow
 * segno
+* pillow
 
-### APT packages 
-* python3.10-venv (Ubuntu for venv)
-
-When using a virtual environment:
+Also, you have to generate the binary message catalog from textual translation description for english and german:
 ```
-# change to the git repository
-cd /path/to/gitrepository/epc-qr-generator/
-
-# create the virtual environment
-python3 -m venv ${PWD}/venv
-
-# load the virtual environment
-source ${PWD}/venv/bin/activate
-
-# install python modules
-pip3 install pillow tk segno
-```
-
-## Build with pyinstaller
-To build it with pyinstaller for generating binaries for executing without python:
-```
-# change to the git repository
-cd /path/to/gitrepository/epc-qr-generator/
-
-# create binaries with pyinstaller
-pyinstaller --onefile EPC-QR-Generator.py
-```
-
-If you have set up a virtual environment, you can:
-```
-# change to the git repository
-cd /path/to/gitrepository/epc-qr-generator/
-
-# create the virtual environment
-python3 -m venv ./
-
-# load the virtual environment
-source /path/to/gitrepository/epc-qr-generator/.venv/bin/activate
-
-# install python modules and pyinstaller
-pip3 install pillow tk segno pyinstaller pycodestyle
-
-# create binaries with pyinstaller
-pyinstaller --noconsole --add-data locale/de/LC_MESSAGES/:locale/de/LC_MESSAGES --add-data locale/en/LC_MESSAGES/:locale/en/LC_MESSAGES" --add-data locale/*.pot:locale/" EPC-QR-Generator.py
-```
-
-## Create DMG image file for distributing the macOSX app
-First of all, you have to install create-dmg:
-```
-brew install create-dmg
-```
-Now, you can create the dmg image file:
-```
-# create directory for .app folder and move app folder to it
-mkdir -p dist/dmg/
-mv dist/EPC-QR-Generator dist/dmg/
-
-# create dmg image with app
-create-dmg \
-  --volname "EPC-QR-Generator" \
-  --volicon "epc-qr-generator.logo.ico" \
-  --window-pos 200 120 \
-  --window-size 600 300 \
-  --icon-size 100 \
-  --icon "EPC-QR-Generator.app" 175 120 \
-  --hide-extension "EPC-QR-Generator.app" \
-  --app-drop-link 425 120 \
-  "dist/EPC-QR-Generator.dmg" \
-  "dist/dmg/"
-```
-## Running EPC-QR-Generator
-To run with python:
-´´´´
-python3 EPC-QR-Generator.py
-´´´
-
-To run the binary, just double click the application.
-
-> [!NOTE]
-> If you execute the macOSX binary the start of the application could be delayed for 5 seconds. Please wait 5 seconds to let the application window appear.
-
-## Generating new languages
-For generating a new language file for translation, you have to execute the following commands, e.g. for english: 
-```
-mkdir locale
-# extracting POT files with xgettext 
-xgettext epc-qr-generator.py -d messages -p locale
-mv locale/messages.po locale/messages.pot
-mkdir -p locale/en/LC_MESSAGES/
-msginit -i locale/messages.pot --locale=en_EN -o locale/en/LC_MESSAGES/messages.po
 msgfmt locale/en/LC_MESSAGES/messages.po -o locale/en/LC_MESSAGES/messages.mo
+msgfmt locale/de/LC_MESSAGES/messages.po -o locale/de/LC_MESSAGES/messages.mo
 ```
 
-### Updating language files
+## Run
+After that, you can run the application:
 ```
-msgmerge locale/en/LC_MESSAGES/messages.po locale/messages.pot -o locale/en/LC_MESSAGES/messages.po
-msgmerge locale/de/LC_MESSAGES/messages.po locale/messages.pot -o locale/de/LC_MESSAGES/messages.po
-
+python3 EPC-QR-Generator.py
 ```
 
-## More Information about EPC
+# Building binaries
+If you want to create binary files for distribution purposes, you can have look at the build instructions:
+* [Linux](doc/BUILD.linux.md)
+* [macOS](doc/BUILD.macOSX.md)
+
+# Create new languages
+If you want to create a new language for the UI, please see [doc/CREATE_LANG](doc/CREATE_LANG.md).
+
+# More Information about EPC 
 * https://de.wikipedia.org/wiki/EPC-QR-Code
-* https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2022-06/EPC121-16%20SCT%20Inst%20C2PSP%20IG%202023%20V1.0.pdf
+* https://www.europeanpaymentscouncil.eu/
+  * https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2022-06/EPC121-16%20SCT%20Inst%20C2PSP%20IG%202023%20V1.0.pdf
+
+
+# Other generators
+If you don't mind to give your finance and private data to unknown, you may find these online generators interesting:
+* https://www.qrcode-generator.de/solutions/epc-qr-code/
+* https://epc-qr.eu/?form
