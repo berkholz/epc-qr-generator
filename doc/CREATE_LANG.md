@@ -32,4 +32,13 @@ msgmerge locale/fr/LC_MESSAGES/messages.po locale/messages.pot -o locale/fr/LC_M
 > When you updated the language files, make sure to generate also the binary message catalog:
 > ```
 > msgfmt locale/fr/LC_MESSAGES/messages.po -o locale/fr/LC_MESSAGES/messages.mo
-> ``` 
+> ```
+
+# Updating build scripts
+The language files are added to the binaries when built via build scripts. To add the new language you have to add the locale/fr/* to the binary package.
+
+Add the line with --add-data (here fr for french):
+``` 
+CMD_ARGS="$CMD_ARGS --add-data locale/fr/LC_MESSAGES/:locale/fr/LC_MESSAGES"
+```
+Now, you can build binary packages with french ui support.
