@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 23:47+0100\n"
+"POT-Creation-Date: 2026-04-04 01:29+0200\n"
 "PO-Revision-Date: 2026-03-18 23:29+0100\n"
 "Last-Translator: Marcel Berkholz <epc-qr-generator@example.com>\n"
 "Language-Team: English\n"
@@ -17,126 +17,154 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: EPC-QR-Generator.py:46
+#: epc-qr-generator.py:57
 msgid "About"
 msgstr "About"
 
-#: EPC-QR-Generator.py:48 EPC-QR-Generator.py:101
+#: epc-qr-generator.py:59 epc-qr-generator.py:194
 msgid "IBAN calculator"
 msgstr "IBAN calculator"
 
-#: EPC-QR-Generator.py:51 EPC-QR-Generator.py:300
+#: epc-qr-generator.py:62 epc-qr-generator.py:398
 msgid "Quit"
 msgstr "Quit"
 
-#: EPC-QR-Generator.py:52
+#: epc-qr-generator.py:63
 msgid "File"
 msgstr "File"
 
-#: EPC-QR-Generator.py:56
+#: epc-qr-generator.py:67
 msgid "Templates"
 msgstr "Templates"
 
-#: EPC-QR-Generator.py:68
+#: epc-qr-generator.py:79
 msgid "Last used templates..."
 msgstr "Last used templates..."
 
-#: EPC-QR-Generator.py:73
+#: epc-qr-generator.py:84
 msgid "Settings"
 msgstr "Settings"
 
-#: EPC-QR-Generator.py:84
+#: epc-qr-generator.py:96
 msgid "Language"
 msgstr "Language"
 
-#: EPC-QR-Generator.py:105
+#: epc-qr-generator.py:133
+msgid "Error while reading config file."
+msgstr "Error while reading config file."
+
+#: epc-qr-generator.py:144
+msgid "Error reading language config file"
+msgstr "Error reading language config file"
+
+#: epc-qr-generator.py:154
+msgid ""
+"No EPC_CONFIG defined. Creating default config file with german language "
+"support..."
+msgstr ""
+"No EPC_CONFIG defined. Creating default config file with german language "
+"support..."
+
+#: epc-qr-generator.py:186
+msgid "Info"
+msgstr "Info"
+
+#: epc-qr-generator.py:198
 msgid "Account data"
 msgstr "Account data"
 
-#: EPC-QR-Generator.py:109
-msgid "country code:"
-msgstr "country code:"
+#: epc-qr-generator.py:202
+#, fuzzy
+msgid "Country code:"
+msgstr "Country code:"
 
-#: EPC-QR-Generator.py:135
+#: epc-qr-generator.py:228
 msgid "Calculate"
 msgstr "Calculate"
 
-#: EPC-QR-Generator.py:141
+#: epc-qr-generator.py:234
 msgid "OK"
 msgstr "OK"
 
-#: EPC-QR-Generator.py:149
+#: epc-qr-generator.py:242
 msgid "IBAN"
 msgstr "IBAN"
 
-#: EPC-QR-Generator.py:187
+#: epc-qr-generator.py:280
 msgid "Warning"
 msgstr "Warning"
 
-#: EPC-QR-Generator.py:187
+#: epc-qr-generator.py:280
 msgid "Account number and/or bankcode are required!"
 msgstr "Account number and/or bankcode are required!"
 
-#: EPC-QR-Generator.py:191
+#: epc-qr-generator.py:284
 msgid "Not implemented yet."
 msgstr "Not implemented yet."
 
-#: EPC-QR-Generator.py:199
+#: epc-qr-generator.py:288
+msgid "Please restart the application to take new config settings effect."
+msgstr "Please restart the application to take new config settings effect."
+
+#: epc-qr-generator.py:297
 msgid "Defaults"
 msgstr "Defaults"
 
-#: EPC-QR-Generator.py:202
+#: epc-qr-generator.py:300
 msgid "Version:"
 msgstr "Version:"
 
-#: EPC-QR-Generator.py:217
+#: epc-qr-generator.py:315
 msgid "Character Set:"
 msgstr "Character Set:"
 
-#: EPC-QR-Generator.py:232
+#: epc-qr-generator.py:330
 msgid "Identification:"
 msgstr "Identification:"
 
-#: EPC-QR-Generator.py:251
+#: epc-qr-generator.py:349
 msgid "Custom"
 msgstr "Custom"
 
-#: EPC-QR-Generator.py:253
+#: epc-qr-generator.py:351
 msgid "Name:"
 msgstr "Name:"
 
-#: EPC-QR-Generator.py:261
+#: epc-qr-generator.py:359
 msgid "IBAN:"
 msgstr "IBAN:"
 
-#: EPC-QR-Generator.py:270
+#: epc-qr-generator.py:368
 msgid "BIC:"
 msgstr "BIC:"
 
-#: EPC-QR-Generator.py:276
+#: epc-qr-generator.py:374
 msgid "Text:"
 msgstr "Text:"
 
-#: EPC-QR-Generator.py:282
+#: epc-qr-generator.py:380
 msgid "Amount (€):"
 msgstr "Amount (€):"
 
-#: EPC-QR-Generator.py:295
+#: epc-qr-generator.py:393
 msgid "Generate"
 msgstr "Generate"
 
-#: EPC-QR-Generator.py:306
+#: epc-qr-generator.py:404
 msgid "Output-Text"
 msgstr "Output-Text"
 
-#: EPC-QR-Generator.py:312
+#: epc-qr-generator.py:410
 msgid "Output-Picture"
 msgstr "Output-Picture"
 
-#: EPC-QR-Generator.py:378
-msgid "Fehler"
-msgstr "Fehler"
+#: epc-qr-generator.py:476
+msgid "Error"
+msgstr "Error"
 
-#: EPC-QR-Generator.py:402
+#: epc-qr-generator.py:498
 msgid "EPC-Generator"
 msgstr "EPC-Generator"
+
+#~ msgid "Fehler"
+#~ msgstr "Fehler"
