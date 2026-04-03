@@ -82,7 +82,6 @@ ls -la ./dist
 If you want to create the linux binary by yourself, use these commands:
 
 ``` 
-#!/bin/bash
 source .venv/bin/activate
 
 CMD_ARGS="$CMD_ARGS --onefile"

@@ -88,7 +88,6 @@ ls -la ./dist
 If you want to create the macOSX application bundle by yourself, use these commands:
 
 ``` 
-#!/bin/bash
 source .venv/bin/activate
 
 CMD_ARGS="$CMD_ARGS --icon ./epc-qr-generator.logo.ico"
