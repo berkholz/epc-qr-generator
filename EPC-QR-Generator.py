@@ -130,7 +130,7 @@ class EPCgenerator(tkinter.Frame):
             except:
                 print("Error writing option ({0}) to config file.".format(option))
         else:
-            raise Exception ("Error while reading config file.")
+            raise Exception (_("Error while reading config file."))
 
     def initialize_config_file(self):
         # check config file if it exists and if it has a default section
@@ -141,7 +141,7 @@ class EPCgenerator(tkinter.Frame):
                 self.language = cp.get("EPC_CONFIG", "language")
                 self.qr_code_file = cp.get("EPC_CONFIG", "qr_code_file")
             except:
-                print("Error reading language config file")
+                print(_("Error reading language config file"))
             match self.language:
                 case "de":
                     self.set_language_de()
@@ -151,7 +151,7 @@ class EPCgenerator(tkinter.Frame):
                     print("Language " + self.language + " is not supported. Setting to default: english.")
                     self.set_language_en()
         else:
-            print("No EPC_CONFIG defined. Creating default config file with german language support...")
+            print(_("No EPC_CONFIG defined. Creating default config file with german language support..."))
             self._create_default_config_file()
             # set default language
             self.set_language_de()
@@ -183,7 +183,7 @@ class EPCgenerator(tkinter.Frame):
                    f"Build on 2026-04-03\n"
                    f"Copyright © 2026 Marcel Berkholz"
                    )
-        infobox = tkinter.messagebox.showinfo("Info", message)
+        infobox = tkinter.messagebox.showinfo(_("Info"), message)
 
     def iban_calculator_dialog(self):
         """Function for showing the IBAN-calulator dialog."""
@@ -199,7 +199,7 @@ class EPCgenerator(tkinter.Frame):
 
         self.langLabel = tkinter.Label(
             groupIBANcalculator,
-            text=_("country code:"))
+            text=_("Country code:"))
         self.langLabel.grid(row=0, column=0)
 
         self.langEntry = tkinter.Entry(
@@ -473,7 +473,7 @@ class EPCgenerator(tkinter.Frame):
             # generate and show qr code picture
             self._create_picture(text2convert)
         except Exception as e:
-            messagebox.showerror(_("Fehler"), str(e))
+            messagebox.showerror(_("Error"), str(e))
 
     def _create_picture(self, text):
         """Generate and display the picture."""
