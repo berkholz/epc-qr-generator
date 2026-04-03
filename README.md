@@ -2,7 +2,7 @@ EPC-QR-Generator is a Python program for generating EPC QR codes. With this QR c
 
 # Running the application
 ## Prequisite
-EPC_QR-Generator is made with Python 3.14.
+EPC-QR-Generator is made with Python 3.14.
 
 To run with Python you need the following packages:
 * tk
@@ -22,7 +22,7 @@ python3 EPC-QR-Generator.py
 ```
 
 # Building binaries
-If you want to create binary files for distribution purposes, you can have look at the build instructions:
+If you want to create binary files for distribution purposes, you can have a look at the build instructions:
 * [Linux](doc/BUILD.linux.md)
 * [macOS](doc/BUILD.macOSX.md)
 
