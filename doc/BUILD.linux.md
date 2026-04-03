@@ -79,7 +79,7 @@ ls -la ./dist
 
 <details>
 <summary>Click to see manual based creation...</summary>
-If you want to create the macOSX application bundle by yourself, use these commands:
+If you want to create the linux binary by yourself, use these commands:
 
 ``` 
 #!/bin/bash
