@@ -163,8 +163,8 @@ class EPCgenerator(tkinter.Frame):
 
     def show_info(self):
         """Function for showing an info dialog."""
-        message = (f"EPC-Generator 0.2\n"
-                   f"Build on 2026-03-23\n"
+        message = (f"EPC-Generator 0.2.1\n"
+                   f"Build on 2026-04-03\n"
                    f"Copyright © 2026 Marcel Berkholz"
                    )
         infobox = tkinter.messagebox.showinfo("Info", message)
