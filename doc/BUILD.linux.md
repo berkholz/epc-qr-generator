@@ -3,12 +3,14 @@ For building the linux binary you can follow this explanation.
 We assume that you use a [virtual python environment](https://docs.python.org/3/library/venv.html).
 
 # Install needed Packages
-For building an linux binary you need some packages installed:
+For building a linux binary you need some packages installed:
 
-## Ubuntu 24.01
+## Ubuntu 24.04
 ```
-apt install git python python3.10-venv
+apt install git python3 python3-venv gettext binutils python3-tk
 ```
+
+
 
 # Check out the repository
 Now you have to check out the git repository:
@@ -63,6 +65,15 @@ msgfmt locale/de/LC_MESSAGES/messages.po -o locale/de/LC_MESSAGES/messages.mo
 > [!NOTE]
 > Only two languages are yet supported: english, german.
 
+> [!TIP]
+> When you get the following error:
+> ```
+> Der Befehl 'msgfmt' wurde nicht gefunden, kann aber installiert werden mit:
+> sudo apt install gettext
+> ```
+> 
+> please install all needed packages listed above.
+
 # Build linux binary with pyinstaller 
 Now, you can create the linux binary by using [the script](../build_executable.linux.sh):
 ```
@@ -71,6 +82,16 @@ cd /path/to/your/gitrepos/epc-qr-generator/
 
 ./build_executable.linux.sh
 ```
+> [!TIP]
+> When you get the followng error message:
+> ```
+> ERROR: On Linux, objdump is required. It is typically provided by the 'binutils' package installable via your Linux distribution's package manager.
+> ```
+> you have to install the binutils package:
+> ```
+> apt install binutils 
+> ```
+
 
 Your ubuntu binary is located in the dist folder:
 ```
@@ -88,6 +109,8 @@ CMD_ARGS="$CMD_ARGS --onefile"
 CMD_ARGS="$CMD_ARGS --add-data locale/de/LC_MESSAGES/:locale/de/LC_MESSAGES"
 CMD_ARGS="$CMD_ARGS --add-data locale/en/LC_MESSAGES/:locale/en/LC_MESSAGES"
 CMD_ARGS="$CMD_ARGS --add-data locale/*.pot:locale/"
+CMD_ARGS="$CMD_ARGS --hidden-import=tkinter"
+CMD_ARGS="$CMD_ARGS --hidden-import=PIL._tkinter_finder"
 CMD_ARGS="$CMD_ARGS EPC-QR-Generator.py"
 
 pyinstaller $CMD_ARGS
