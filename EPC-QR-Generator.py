@@ -1,3 +1,4 @@
+import re # check inputs
 import sys
 import tkinter
 from tkinter import ttk, messagebox, simpledialog
@@ -71,10 +72,10 @@ class EPCgenerator(tkinter.Frame):
         # TODO: Entries should be loaded via file
         self.menuTemplatesEntries.add_command(
             label="Entry1",
-            command=self.handler)
+            command=self.handler_not_implemented)
         self.menuTemplatesEntries.add_command(
             label="Entry2",
-            command=self.handler)
+            command=self.handler_not_implemented)
         self.menuTemplates.add_cascade(
             label=_("Last used templates..."),
             menu=self.menuTemplatesEntries)
@@ -141,7 +142,7 @@ class EPCgenerator(tkinter.Frame):
                 self.language = cp.get("EPC_CONFIG", "language")
                 self.qr_code_file = cp.get("EPC_CONFIG", "qr_code_file")
             except:
-                print(_("Error reading language config file"))
+                print("Error reading language config file")
             match self.language:
                 case "de":
                     self.set_language_de()
@@ -151,7 +152,7 @@ class EPCgenerator(tkinter.Frame):
                     print("Language " + self.language + " is not supported. Setting to default: english.")
                     self.set_language_en()
         else:
-            print(_("No EPC_CONFIG defined. Creating default config file with german language support..."))
+            print("No EPC_CONFIG defined. Creating default config file with german language support...")
             self._create_default_config_file()
             # set default language
             self.set_language_de()
@@ -279,7 +280,7 @@ class EPCgenerator(tkinter.Frame):
         else:
             tkinter.messagebox.showwarning(_("Warning"), _("Account number and/or bankcode are required!"))
 
-    def handler(self):
+    def handler_not_implemented(self):
         """Dummy function."""
         print(_("Not implemented yet."))
 
@@ -365,22 +366,22 @@ class EPCgenerator(tkinter.Frame):
         self.ibanEntry.grid(row=1, column=1)
 
         # BIC
-        bicLabel = ttk.Label(groupCustomData, text=_("BIC:"))
-        bicLabel.grid(row=2, column=0)
-        bicEntry = ttk.Entry(groupCustomData, textvariable=self.bic_var)
-        bicEntry.grid(row=2, column=1)
+        self.bicLabel = ttk.Label(groupCustomData, text=_("BIC:"))
+        self.bicLabel.grid(row=2, column=0)
+        self.bicEntry = ttk.Entry(groupCustomData, textvariable=self.bic_var)
+        self.bicEntry.grid(row=2, column=1)
 
         # Text
-        textLabel = ttk.Label(groupCustomData, text=_("Text:"))
-        textLabel.grid(row=3, column=0)
-        textEntry = ttk.Entry(groupCustomData, textvariable=self.text_var)
-        textEntry.grid(row=3, column=1)
+        self.textLabel = ttk.Label(groupCustomData, text=_("Text:"))
+        self.textLabel.grid(row=3, column=0)
+        self.textEntry = ttk.Entry(groupCustomData, textvariable=self.text_var)
+        self.textEntry.grid(row=3, column=1)
 
         # amount
-        amountLabel = ttk.Label(groupCustomData, text=_("Amount (€):"))
-        amountLabel.grid(row=4, column=0)
-        amountEntry = ttk.Entry(groupCustomData, textvariable=self.amount_var)
-        amountEntry.grid(row=4, column=1)
+        self.amountLabel = ttk.Label(groupCustomData, text=_("Amount (€):"))
+        self.amountLabel.grid(row=4, column=0)
+        self.amountEntry = ttk.Entry(groupCustomData, textvariable=self.amount_var)
+        self.amountEntry.grid(row=4, column=1)
 
         groupCustomData.pack(expand=True, fill="x", side="left")
         frameCustom.pack(fill="x", expand=True)
@@ -391,7 +392,7 @@ class EPCgenerator(tkinter.Frame):
         self.generateButton = tkinter.Button(
             groupButtonFrame,
             text=_("Generate"),
-            command=self.refresh_output)
+            command=self._check_inputs)
         self.generateButton.grid(row=0, column=0)
         self.quitButton = tkinter.Button(
             groupButtonFrame,
@@ -491,6 +492,75 @@ class EPCgenerator(tkinter.Frame):
         # show path of qr code file
         self.picture_path.delete(1.0, 'end')
         self.picture_path.insert('end', qrcode_file)
+
+    def _check_inputs(self):
+        """Check if all inputs are valid."""
+        message_all = ""
+        errors_found = False
+        # check amount
+        (result_amount, message_amount) = self._check_amount()
+        if not result_amount:
+            self.amountEntry.config(foreground="red")
+            self.amountLabel.config(foreground="red")
+            message_all += message_amount + "\n"
+            errors_found = True
+        else:
+            self.amountEntry.config(foreground="black")
+            self.amountLabel.config(foreground="black")
+
+        (result_bic, message_bic) = self._check_bic()
+        if result_bic is not True:
+            self.bicEntry.config(foreground="red")
+            self.bicLabel.config(foreground="red")
+            message_all += message_bic + "\n"
+            errors_found = True
+        else:
+            self.bicEntry.config(foreground="black")
+            self.bicLabel.config(foreground="black")
+
+        (result_iban, message_iban) = self._check_iban()
+        if result_iban is None:
+            self.ibanEntry.config(foreground="red")
+            self.ibanLabel.config(foreground="red")
+            message_all += message_iban + "\n"
+            errors_found = True
+        else:
+            self.ibanEntry.config(foreground="black")
+            self.ibanLabel.config(foreground="black")
+
+        if not errors_found:
+            self.refresh_output()
+        else:
+            infobox = tkinter.messagebox.showinfo("Info", message_all)
+
+    def _check_iban(self):
+        """Check if all inputs are valid."""
+        iban = self.iban_var.get()
+        regex_iban = re.compile(r"^[A-Z]{2}[0-9]{2}[a-zA-Z0-9]{1,30}$")
+        if not re.match(regex_iban, iban):
+            message_iban = _("The international bank account number must be in the format DE110123456789012.")
+            return (False, message_iban)
+        return (True, None)
+
+    def _check_bic(self):
+        """Check if bic is valid."""
+        bic = self.bicEntry.get()
+        message_bic = None
+        regexp_bic = re.compile(r"^[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}$")
+        if not re.match(regexp_bic, bic):
+            message_bic = _("The bank code must be in the format .")
+            return (False, message_bic)
+        return (True, message_bic)
+
+    def _check_amount(self):
+        """Check if the amount is valid."""
+        amount = self.amount_var.get()
+        message_amount = None
+        regexp_amount = re.compile(r"^[0-9]+\.[0-9]{2}$")
+        if not re.match(regexp_amount, amount):
+            message_amount = _("The amount must be in the format 'nnnn.nn' (n in natural numbers).")
+            return (False, message_amount)
+        return (True, message_amount)
 
 if __name__ == '__main__':
     root = tkinter.Tk()
