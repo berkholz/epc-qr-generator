@@ -536,7 +536,7 @@ class EPCgenerator(tkinter.Frame):
     def _check_iban(self):
         """Check if all inputs are valid."""
         iban = self.iban_var.get()
-        regex_iban = re.compile(r"^[A-Z]{2}[0-9]{2}[a-zA-Z0-9]{1,30}$")
+        regex_iban = re.compile(r"^[A-Z]{2,2}[0-9]{2}[a-zA-Z0-9]{1,30}$")
         if not re.match(regex_iban, iban):
             message_iban = _("The international bank account number must be in the format DE110123456789012.")
             return (False, message_iban)
@@ -547,8 +547,8 @@ class EPCgenerator(tkinter.Frame):
         bic = self.bicEntry.get()
         message_bic = None
         regexp_bic = re.compile(r"^[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}$")
-        if not re.match(regexp_bic, bic):
-            message_bic = _("The bank code must be in the format .")
+        if not re.match(regexp_bic, bic) and len(bic) != 0 :
+            message_bic = _("The bank code must be in the format SSSSCCSSSSS (S in numbers (A-Z) and literals (0-9), C in literals.")
             return (False, message_bic)
         return (True, message_bic)
 
