@@ -39,10 +39,13 @@ sudo apt install gettext
 ```
 
 ## resolution
-
+For Ubuntu 24.04:
 ```
 apt install gettext
 ```
+
+For Windows you have to install [gettext](https://www.gnu.org/software/gettext/gettext.html).
+
 
 # Error #4 - No module named 'PIL._tkinter_finder'
 In the application on pressing the generate button a dialog with the following message is thrown:
