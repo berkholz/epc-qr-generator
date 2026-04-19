@@ -1,7 +1,15 @@
 EPC-QR-Generator is a Python program for generating EPC QR codes. With this QR codes you can easily transfer money via your banking app.
 
 # Running the application
-## Prequisite
+## Run via binary
+### Windows
+Download the binary from the actual release and execute it.
+
+### macOS
+Download the binary from the actual release, open the dmg image and drag and drop the application on your programm folder. 
+
+## Run via Python
+### Prequisite
 EPC-QR-Generator is made with Python 3.14.
 
 To run with Python you need the following packages:
@@ -15,7 +23,7 @@ msgfmt locale/en/LC_MESSAGES/messages.po -o locale/en/LC_MESSAGES/messages.mo
 msgfmt locale/de/LC_MESSAGES/messages.po -o locale/de/LC_MESSAGES/messages.mo
 ```
 
-## Run
+### Execute
 After that, you can run the application:
 ```
 python3 EPC-QR-Generator.py
@@ -25,13 +33,14 @@ python3 EPC-QR-Generator.py
 If you want to create binary files for distribution purposes, you can have a look at the build instructions:
 * [Linux](doc/BUILD.linux.md)
 * [macOS](doc/BUILD.macOSX.md)
+* [Windows](doc/BUILD.windows.md)
 
 # Language support
 ## Create new languages
-If you want to create a new language for the UI, please see [doc/CREATE_LANG](doc/CREATE_LANG.md).
+If you want to create a new language for the UI, please see [doc/CREATE_LANG.md)](doc/CREATE_LANG.md).
 
 ## Update translations 
-If you have added new text that is relevant for multilanguage support, you have to update the template and po and mo files of all languages. To see how, take a look at [doc/UPDATE_LANG](doc/UPDATE_LANG.md).
+If you have added new text that is relevant for multilanguage support, you have to update the template and po and mo files of all languages. To see how, take a look at [doc/UPDATE_LANG.md](doc/UPDATE_LANG.md).
 
 
 # More Information about EPC 
