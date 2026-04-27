@@ -34,6 +34,7 @@ class EPCgenerator(tkinter.Frame):
 
     # constructor
     def __init__(self, parent=None):
+        logging.info("Initialize config from {0}".format(config_file))
         self.initialize_config_file()
 
         ttk.Frame.__init__(self, parent)
@@ -59,10 +60,12 @@ class EPCgenerator(tkinter.Frame):
         self.amount_var = tkinter.StringVar(value="0.00")
 
         # create menu
+        LOG.debug("Creating file menu in tkinter.")
         self.menuBar = tkinter.Menu(parent)
         parent.config(menu=self.menuBar)
         self.fillMenuBar()
         self.pack()
+        LOG.debug("Creating widgets in tkinter.")
         self.createWidgets()
 
     def fillMenuBar(self):
@@ -115,16 +118,22 @@ class EPCgenerator(tkinter.Frame):
         check config file if it exists and if it has a default section
         :return: True if config file exists and if it has a default section, else False
         """
+        LOG.debug("Checking config file {0}".format(config_file))
+
         # check if file exists and readable
+        LOG.debug("Check if config file exists")
         if os.path.isfile(config_file) & os.path.exists(config_file):
             cp = configparser.ConfigParser()
             cp.read(config_file)
             # check if config file has DEFAULT section
+            LOG.debug("Check config file for section EPC_CONFIG")
             if cp.has_section('EPC_CONFIG'):
                 return True
+        LOG.error("Config file {0} doesn't exist or has no section EPC_CONFIG.".format(config_file))
         return False
 
     def _create_default_config_file(self):
+        LOG.info("Creating default config file {0}".format(config_file))
         config_parser = configparser.ConfigParser()
         config_parser['EPC_CONFIG'] = {
             'language': 'de',
@@ -137,6 +146,7 @@ class EPCgenerator(tkinter.Frame):
             config_parser.write(config)
 
     def change_config(self, section, option, value):
+        LOG.debug("Changing config {0} to {1}".format(section, option))
         # check config file if it exists and if it has a default section
         if self._check_config_file():
             cp = configparser.ConfigParser()
@@ -146,17 +156,20 @@ class EPCgenerator(tkinter.Frame):
                 with open(config_file, 'w') as config:
                     cp.write(config)
             except:
-                print("Error writing option ({0}) to config file.".format(option))
+                LOG.error("Error writing option ({0}) to config file.".format(option))
         else:
             raise Exception (_("Error while reading config file."))
 
     def initialize_config_file(self):
+        LOG.debug("Initializing config from file {0}".format(config_file))
         # check config file if it exists and if it has a default section
         if self._check_config_file():
             cp = configparser.ConfigParser()
             cp.read(config_file)
             try:
                 self.language = cp.get("EPC_CONFIG", "language")
+                LOG.debug("Initialized config with language = {1}".format(self.language))
+
                 self.qr_code_file = cp.get("EPC_CONFIG", "qr_code_file")
                 LOG.debug("Initialized config with qr_code_file = {0}".format(self.qr_code_file))
 
@@ -170,17 +183,19 @@ class EPCgenerator(tkinter.Frame):
                     debug_log_file = cp.get("EPC_CONFIG", "debug_log_file")
                     LOG.debug("Initialized config with debug_log_file = {0}".format(debug_log_file))
             except:
-                print("Error reading language config file")
+                LOG.warning("Error reading config file")
+
+            # set language from config file
             match self.language:
                 case "de":
                     self.set_language_de()
                 case "en":
                     self.set_language_en()
                 case _:
-                    print("Language " + self.language + " is not supported. Setting to default: english.")
+                    LOG.warning("Language " + self.language + " is not supported. Setting to default: english.")
                     self.set_language_en()
         else:
-            print("No EPC_CONFIG defined. Creating default config file with german language support...")
+            LOG.warning("No EPC_CONFIG defined. Creating default config file with german language support...")
             self._create_default_config_file()
             # set default language
             self.set_language_de()
