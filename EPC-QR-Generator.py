@@ -10,12 +10,25 @@ import gettext # import for internationalization i18
 import configparser # configuration file loading
 #from pathlib import Path # import for file checking of config file
 from os import path
+import logging
 
 base_path = os.path.expanduser("~")
 qrcode_file_name = f"qrcode.png"
 config_file_name = f"epc-qr-generator.ini"
+debug_file_name = f"epc-qr-generator.debug.log"
 qrcode_file = os.path.join(base_path, qrcode_file_name)
 config_file = os.path.join(base_path, config_file_name)
+debug_log_file = os.path.join(base_path, debug_file_name)
+debug_level = logging.DEBUG
+
+# set debug handler
+log_handler = logging.StreamHandler(sys.stdout)
+log_format = logging.Formatter("{asctime} {levelname}: {message}",
+                              "%d.%m.%Y %H:%M:%S", style="{")
+log_handler.setFormatter(log_format)
+LOG = logging.getLogger()
+LOG.addHandler(log_handler)
+LOG.setLevel(debug_level)
 
 class EPCgenerator(tkinter.Frame):
 
@@ -115,7 +128,11 @@ class EPCgenerator(tkinter.Frame):
         config_parser = configparser.ConfigParser()
         config_parser['EPC_CONFIG'] = {
             'language': 'de',
-            'qr_code_file': f"{qrcode_file}"}
+            'qr_code_file': f"{qrcode_file}",
+            'debug_level': f"{debug_file_name}",
+            'debug_log_file': f"{debug_log_file}"
+        }
+        LOG.debug("Writing default config file {0} with settings: {1}".format(config_file, config_parser['EPC_CONFIG']))
         with open(config_file, 'w') as config:
             config_parser.write(config)
 
@@ -141,6 +158,17 @@ class EPCgenerator(tkinter.Frame):
             try:
                 self.language = cp.get("EPC_CONFIG", "language")
                 self.qr_code_file = cp.get("EPC_CONFIG", "qr_code_file")
+                LOG.debug("Initialized config with qr_code_file = {0}".format(self.qr_code_file))
+
+                if cp.get("EPC_CONFIG", "debug_level") == "":
+                    debug_level = logging.WARNING
+                else:
+                    debug_level = cp.get("EPC_CONFIG", "debug_level")
+                LOG.debug("Initialized config with debug_level = {0}".format(debug_level))
+
+                if cp.get("EPC_CONFIG", "debug_log_file") != "":
+                    debug_log_file = cp.get("EPC_CONFIG", "debug_log_file")
+                    LOG.debug("Initialized config with debug_log_file = {0}".format(debug_log_file))
             except:
                 print("Error reading language config file")
             match self.language:
