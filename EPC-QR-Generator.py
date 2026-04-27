@@ -557,8 +557,8 @@ class EPCgenerator(tkinter.Frame):
         amount = self.amount_var.get()
         message_amount = None
         regexp_amount = re.compile(r"^[0-9]+\.[0-9]{2}$")
-        if not re.match(regexp_amount, amount):
-            message_amount = _("The amount must be in the format 'nnnn.nn' (n in natural numbers).")
+        if not re.match(regexp_amount, amount) or amount.strip() == "0.00":
+            message_amount = _("The amount must be in the format 'nnnn.nn' (n in natural numbers) and not zero.")
             return (False, message_amount)
         return (True, message_amount)
 
