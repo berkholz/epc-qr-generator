@@ -1,1 +1,11 @@
-
+#python -m pip freeze > requirements.txt
+altgraph==0.17.5
+macholib==1.16.4
+packaging==26.0
+pillow==12.1.1
+pycodestyle==2.14.0
+pyinstaller==6.19.0
+pyinstaller-hooks-contrib==2026.3
+segno==1.6.6
+setuptools==82.0.1
+tk==0.1.0
