@@ -2,7 +2,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
 name: Python application
-run-name: Testing Oython application epc-qr-generator
+run-name: Build epc-qr-generator
 on:
   push:
     branches: [ "github_actions" ]
