@@ -22,11 +22,20 @@ jobs:
       with:
         python-version: "3.14"
         cache: 'pip'
+    - name: Install the code linting and formatting tool Ruff
+      run: pipx install ruff
+    - name: Lint code with Ruff
+      run: ruff check --output-format=github --target-version=py39
+    - name: Check code formatting with Ruff
+      run: ruff format --diff --target-version=py39
+      continue-on-error: true
     - name: Install packages
       run: |
         apt install -y git python3 python3-venv gettext binutils python3-tk
     - name: Install dependencies
       run: |
+        python -m venv .venv
+        source .venv/bin/activate
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
