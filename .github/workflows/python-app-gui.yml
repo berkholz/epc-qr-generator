@@ -34,5 +34,5 @@ jobs:
     - name: Build python app with pyinstaller
       run: |
         source .venv/bin/activate
-        build_executable.linux.sh
+        ./build_executable.linux.sh
         ls -la dist/
